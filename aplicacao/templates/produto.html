@@ -37,14 +37,14 @@
                 <td>{{p.data}}</td>
                 <td>{{p.descricao}}</td>
                 <td>
-                    <form action="{% url 'urleditarProduto' %}" method="POST">
+                    <form action="{% url 'urleditarProduto' p.id %}" method="POST">
                         {% csrf_token %}
                         <input type="submit" value="Editar" class="btn btn-primary">
                     </form>
                 </td>
 
                 <td>
-                    <form action="{% url 'urlexcluirProduto' %}" method="POST">
+                    <form action="{% url 'urlexcluirProduto' p.id %}" method="POST">
                         {% csrf_token %}
                     <input type="submit" value="Excluir" class="btn btn-danger">
                 </form>
