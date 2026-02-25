@@ -1,0 +1,63 @@
+{%load bootstrap5 %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    {% bootstrap_css %}
+  </head>
+
+
+  <body>
+    <div class="table-responsive container">
+      <h1>Lista de Produtos</h1>
+
+      <table class="table table-primary table-hover">
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Preço</th>
+                <th>Qtde</th>
+                <th>Data</th>
+                <th>Descrição</th>
+                <th>Editar</th>
+                <th>Excluir</th>
+            </tr>
+        </thead>
+        <tbody>
+        
+            {% for p in produtos%}
+            <tr>
+                <td>{{p.nome}}</td>
+                <td>{{p.preco}}</td>
+                <td>{{p.qtde}}</td>
+                <td>{{p.data}}</td>
+                <td>{{p.descricao}}</td>
+                <td>
+                    <form action="{% url 'urleditarProduto' %}" method="POST">
+                        {% csrf_token %}
+                        <input type="submit" value="Editar" class="btn btn-primary">
+                    </form>
+                </td>
+
+                <td>
+                    <form action="{% url 'urlexcluirProduto' %}" method="POST">
+                        {% csrf_token %}
+                    <input type="submit" value="Excluir" class="btn btn-danger">
+                </form>
+                </td>
+            </tr>
+            {% endfor %}
+          </tr>
+        </tbody>
+      </table>
+      <form action="{% url 'urlcadastrarProduto' %}" method="POST">
+        {% csrf_token %}
+        <input type="submit" value="Novo Produto" class="btn btn-primary" />
+      </form>
+    </div>
+  </body>
+</html>
