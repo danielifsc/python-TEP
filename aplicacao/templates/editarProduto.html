@@ -13,11 +13,11 @@
     <div class="container">
 
         <h1>Editor Produto</h1>
-        <form action="{% url 'urleditarProduto' p.id %}" method="post">
+        <form action="{% url 'urleditarProduto' p.id %}" method="POST">
             {% csrf_token %}
         <input type="text" name="txtNome" value="{{p.nome}}" class="form-control" >
         
-        <input type="number" name="txtPreco" value="{{p.preco}}"class="form-control" >
+        <input type="text" name="txtPreco" value="{{p.preco}}" class="form-control" >
         
         <input type="number" name="txtQtde" value="{{p.qtde}}"class="form-control" >
         
@@ -27,6 +27,7 @@
 
       
             <input type="submit" value="Salvar" class="btn btn-success">
+            <a href="{% url  'urlproduto' %}" class="btn btn-secondary">cancelar</a>
         </form>
 
     </div>

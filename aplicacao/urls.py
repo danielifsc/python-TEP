@@ -6,6 +6,7 @@ from .views import cadastrarProduto
 from .views import salvarProduto
 from .views import editarProduto
 from .views import excluirProduto
+from .views import entrar
 
 urlpatterns = [
     path('', index, name="urlindex"),
@@ -14,5 +15,6 @@ urlpatterns = [
     path('cadastrarProduto', cadastrarProduto, name="urlcadastrarProduto"),
     path('salvarProduto', salvarProduto, name="urlsalvarProduto"),
     path('editarProduto/<int:id>', editarProduto, name="urleditarProduto"),
-    path('excluirProduto/<int:id>', excluirProduto, name="urlexcluirProduto")
+    path('excluirProduto/<int:id>', excluirProduto, name="urlexcluirProduto"),
+    path('entrar', entrar, name="urlEntrar"),
 ]
