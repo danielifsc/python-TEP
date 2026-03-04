@@ -3,7 +3,8 @@ from django.http import HttpResponse
 from .models import Produto
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from django.contrib import login_required 
+from django.contrib import messages
+from .form import UsuarioForm
 
 def index(request):
     context = {'curso': 'Desenvolvimento de Sistemas'}
@@ -12,6 +13,8 @@ def index(request):
 def contatos(request):
     context = {'telefone' : '2050-2050', 'email' : 'carlinhos@gmail.com'}
     return render(request, 'contatos.html', context)
+
+@login_required(login_url="urlEntrar")
 def produto(request):
     produtos = Produto.objects.all()
     context = {'produtos': produtos}
@@ -69,5 +72,29 @@ def entrar(request):
     
     if request.method == "GET":
         return render(request, "entrar.html")
-    else:
-        return HttpResponse('entrou')
+    elif request.method == "POST":
+        usuario = request.POST.get("txtUser")
+        senha = request.POST.get("txtPass")
+        user = authenticate(username=usuario, password=senha)
+
+    if user:
+        login(request, user)
+        return redirect('urlproduto')
+    messages.error(request, "Falha na autenticação!")
+    return render(request,'entrar.html')
+
+def sair(request):
+    logout(request)
+    return redirect('urlEntrar')
+
+def cadastrarUsuario(request):
+    if request.method == "GET":
+        form = UsuarioForm()
+        context = {'form':form}
+        return render(request,"cadastrarUsuario.html", context)
+    else: 
+        form = UsuarioForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save
+            return redirect('urlEntrar')
+    

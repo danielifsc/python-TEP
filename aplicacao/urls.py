@@ -7,6 +7,8 @@ from .views import salvarProduto
 from .views import editarProduto
 from .views import excluirProduto
 from .views import entrar
+from .views import sair
+from .views import cadastrarUsuario
 
 urlpatterns = [
     path('', index, name="urlindex"),
@@ -17,4 +19,6 @@ urlpatterns = [
     path('editarProduto/<int:id>', editarProduto, name="urleditarProduto"),
     path('excluirProduto/<int:id>', excluirProduto, name="urlexcluirProduto"),
     path('entrar', entrar, name="urlEntrar"),
+    path('sair', sair, name="urlSair"),
+    path('cadastrarUsuario', cadastrarUsuario, name="urlcadastrarUsuario"),
 ]

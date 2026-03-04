@@ -14,19 +14,30 @@
 <body>
     <div class="container">
         <h1>Página de Login</h1>
-        <form action="{% url 'urlentrar' % " method="post">
+        <form action="{% url 'urlEntrar' %} " method="POST">
+
             {% csrf_token %}
             <div class="mb-3">
                 <input type="text" name="txtUser" placeholder="Digite o seu usuário..." class="form-control" required>
             </div>
 
             <div class="mb-3">
-                <input type="password" name="txtSenha" placeholder="Digite a sua senha..." class="form-control" required>
+                <input type="password" name="txtPass" placeholder="Digite a sua senha..." class="form-control" required>
             </div>
 
-            <input type="submit" value="entrar" class="btn btn-primary">
+            <div class="mb-3">
+                <input type="submit" value="entrar" class="btn btn-primary">
+                <a href="{% url 'urlcadastrarUsuario' %}" value="Cadastrar" class="btn btn-success">
+            </div>
+      
         </form>
-
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-danger"> 
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
     </div>
 </body>
 
