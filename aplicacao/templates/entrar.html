@@ -27,17 +27,17 @@
 
             <div class="mb-3">
                 <input type="submit" value="entrar" class="btn btn-primary">
-                <a href="{% url 'urlcadastrarUsuario' %}" value="Cadastrar" class="btn btn-success">
+                <a href="{% url 'urlcadastrarUsuario' %}" class="btn btn-success">Cadastrar</a>
             </div>
       
         </form>
-        {% if messages %}
-            {% for message in messages %}
-                <div class="alert alert-danger"> 
-                    {{ message }}
-                </div>
-            {% endfor %}
-        {% endif %}
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-danger"> 
+                         {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
     </div>
 </body>
 

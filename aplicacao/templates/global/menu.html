@@ -1,0 +1,15 @@
+<div class="menu-content">
+    <nav class="menu-content">
+        {% if user.is_authenticated%}
+            <a href="{% url 'urlindex'%}">Home</a>
+            <a href="{% url 'urlproduto'%}">Produto</a>
+            <a href="{% url 'urlcadastrarProduto'%}">Novo Produto</a>
+            <a href="{% url 'urlcontatos'%}">Contato</a>
+            <a href="{% url 'urlSair'%}">Logout</a>
+        {% else %}
+            <a href="{% url 'urlEntrar'%}">Login</a>
+        {% endif %}
+
+
+    </nav>
+</div>

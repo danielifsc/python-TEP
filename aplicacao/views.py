@@ -95,6 +95,6 @@ def cadastrarUsuario(request):
     else: 
         form = UsuarioForm(request.POST, request.FILES)
         if form.is_valid():
-            form.save
-            return redirect('urlEntrar')
+            form.save()
+        return redirect('urlEntrar')
     

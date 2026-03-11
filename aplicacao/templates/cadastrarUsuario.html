@@ -1,12 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cadastrar Usuario</title>
-</head>
-<body>
+{% extends 'global/base.html' %}
+
+{% block title %}
+  Cadastrar usuário
+{% endblock %}
+
+{% block content %}
     <div class="container">
         
         <form action="{% url 'urlcadastrarUsuario' %}" method="POST">
@@ -20,3 +18,4 @@
     </div>
 </body>
 </html>
+{% endblock %}
