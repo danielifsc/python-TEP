@@ -9,6 +9,9 @@ from .views import excluirProduto
 from .views import entrar
 from .views import sair
 from .views import cadastrarUsuario
+from django.conf.urls.static import static
+from django.conf import settings
+
 
 urlpatterns = [
     path('', index, name="urlindex"),
@@ -22,3 +25,5 @@ urlpatterns = [
     path('sair', sair, name="urlSair"),
     path('cadastrarUsuario', cadastrarUsuario, name="urlcadastrarUsuario"),
 ]
+
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

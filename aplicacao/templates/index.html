@@ -5,28 +5,27 @@
 {% endblock %}
 
 {% block content %}
-    <h1>Página Inicial</h1>
-    <h2>{{curso}}</h2>
-
-    {% for p in produtos  %}
-     <div class="card-group">
-        
-       <div class="card">
-           <img src="..." class="card-img-top" alt="...">
-           <div class="card-body">
-                  <h5 class="card-title">Card title</h5>
-                  <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                </div>
-                <div class="card-footer">
-                   <small class="text-muted">Last updated 3 mins ago</small>
-                </div>
+  <div class="container mt-4">
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-4">
+      {% for p in produtos %}
+        <div class="card-group">
+          <div class="card">
+            <img src="{{p.imagem.url}}" class="card-img-top" alt="{{p.nome}}" style="object-fit: cover" />
+            <div class="card-body">
+              <h5 class="card-title">{{ p.nome }}</h5>
+              <p class="card-text">{{p.descricao|truncatechars:100}}</p>
             </div>
-       </div>     
-    <div>    
-    {% endfor %}
-        <br>
-        <form action="contatos">
-            <button>Ir Para Contatos</button>
-        </form>
+            <div class="card-footer">
+              <small class="text-muted">${{p.preco}}</small>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
     </div>
+
+    <br />
+    <form action="conta  tos">
+      <button>Ir Para Contatos</button>
+    </form>
+  </div>
 {% endblock %}
