@@ -7,8 +7,9 @@ from django.contrib import messages
 from .form import UsuarioForm
 
 def index(request):
-    context = {'curso': 'Desenvolvimento de Sistemas'}
-    return render(request, 'index.html', context)
+    produtos = Produto.objects.all()
+   # context = {'curso': 'Desenvolvimento de Sistemas'}
+    return render(request, 'index.html', {'produtos':produtos})
 
 def contatos(request):
     context = {'telefone' : '2050-2050', 'email' : 'carlinhos@gmail.com'}
