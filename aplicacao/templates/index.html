@@ -1,7 +1,7 @@
 {% extends 'global/base.html' %}
 
 {% block title %}
-  Tela Inicial
+  Dashborad
 {% endblock %}
 
 {% block content %}
@@ -10,22 +10,17 @@
       {% for p in produtos %}
         <div class="card-group">
           <div class="card">
-            <img src="{{p.imagem.url}}" class="card-img-top" alt="{{p.nome}}" style="object-fit: cover" />
+            <img src="{{ p.imagem.url }}" class="card-img-top" alt="{{ p.nome }}" style="height: 200px; object-fit: cover;" />
             <div class="card-body">
               <h5 class="card-title">{{ p.nome }}</h5>
-              <p class="card-text">{{p.descricao|truncatechars:100}}</p>
+              <p class="card-text">{{ p.descricao|truncatechars:100 }}</p>
             </div>
             <div class="card-footer">
-              <small class="text-muted">${{p.preco}}</small>
+              <small class="text-muted">R${{ p.preco }}</small>
             </div>
           </div>
         </div>
       {% endfor %}
     </div>
-
-    <br />
-    <form action="conta  tos">
-      <button>Ir Para Contatos</button>
-    </form>
   </div>
 {% endblock %}

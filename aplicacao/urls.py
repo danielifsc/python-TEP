@@ -1,28 +1,20 @@
 from django.urls import path
-from .views import index
-from .views import contatos
-from .views import produto
-from .views import cadastrarProduto
-from .views import salvarProduto
-from .views import editarProduto
-from .views import excluirProduto
-from .views import entrar
-from .views import sair
+from .views import index, contato, produto, entrar, sair 
+from .views import cadastrarProduto, salvarProduto, editarProduto, excluirProduto
 from .views import cadastrarUsuario
 from django.conf.urls.static import static
 from django.conf import settings
 
-
 urlpatterns = [
     path('', index, name="urlindex"),
-    path('contatos', contatos, name="urlcontatos"),
+    path('contato', contato, name="urlcontato"),
     path('produto', produto, name="urlproduto"),
     path('cadastrarProduto', cadastrarProduto, name="urlcadastrarProduto"),
     path('salvarProduto', salvarProduto, name="urlsalvarProduto"),
     path('editarProduto/<int:id>', editarProduto, name="urleditarProduto"),
     path('excluirProduto/<int:id>', excluirProduto, name="urlexcluirProduto"),
-    path('entrar', entrar, name="urlEntrar"),
-    path('sair', sair, name="urlSair"),
+    path('entrar', entrar, name="urlentrar"),
+    path('sair', sair, name="urlsair"),
     path('cadastrarUsuario', cadastrarUsuario, name="urlcadastrarUsuario"),
 ]
 

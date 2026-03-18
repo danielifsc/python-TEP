@@ -8,58 +8,58 @@ from .form import UsuarioForm
 
 def index(request):
     produtos = Produto.objects.all()
-   # context = {'curso': 'Desenvolvimento de Sistemas'}
-    return render(request, 'index.html', {'produtos':produtos})
+    return render(request, 'index.html', {'produtos': produtos})
 
-def contatos(request):
-    context = {'telefone' : '2050-2050', 'email' : 'carlinhos@gmail.com'}
-    return render(request, 'contatos.html', context)
+def contato(request):
+    context = {'curso': 'Desenvolvimento de Sistemas'}
+    return render(request, 'contato.html', context)
 
-@login_required(login_url="urlEntrar")
+@login_required(login_url="urlentrar")
 def produto(request):
     produtos = Produto.objects.all()
     context = {'produtos': produtos}
     return render(request, "produto.html", context)
-# Create your views here.
 
 def cadastrarProduto(request):
     return render(request, "cadastrarProduto.html")
 
 def salvarProduto(request):
-    get_object_or_404(Produto, id=id)
-
-    thisnome = request.POST.get('txtNome')  
-    thispreco = request.POST.get('txtPreco').replace(',','.')   
-    thisqtde = request.POST.get('txtQtde') 
-    thisdescricao = request.POST.get('txtDescricao')
+    thisnome = request.POST.get('txtNome')
+    thispreco = request.POST.get('txtPreco')
+    thisqtde = request.POST.get('txtQtde')
     thisdata = request.POST.get('txtData')
+    thisdescricao = request.POST.get('txtDescricao')
 
     produto = Produto(
         nome = thisnome,
         preco = float(thispreco),
         qtde = thisqtde,
-        descricao = thisdescricao,
-        data = thisdata
-
+        data = thisdata,
+        descricao = thisdescricao
     )
 
     produto.save()
     return redirect('urlproduto')
 
 def editarProduto(request, id):
-
-    produto = get_object_or_404(Produto, id=id)
+    produto = get_object_or_404(Produto, id=id)  
+    #Produto.objects.get(id=id)
 
     if request.method == "GET":
         context = {'p': produto}
         return render(request, "editarProduto.html", context)
     else:
-        teste = request.POST.get('txtPreco').replace(',','.')
-        produto.nome = request.POST.get('txtNome')  
-        produto.preco = float(teste)  
-        produto.qtde = request.POST.get('txtQtde') 
-        produto.descricao = request.POST.get('txtDescricao')
-        produto.data = request.POST.get('txtData')
+        thisnome = request.POST.get('txtNome')
+        thispreco = request.POST.get('txtPreco').replace(',', '.')
+        thisqtde = request.POST.get('txtQtde')
+        thisdata = request.POST.get('txtData')
+        thisdescricao = request.POST.get('txtDescricao')
+
+        produto.nome = thisnome
+        produto.preco = float(thispreco)
+        produto.qtde = thisqtde
+        produto.data = thisdata
+        produto.descricao = thisdescricao
 
         produto.save()
         return redirect('urlproduto')
@@ -70,7 +70,6 @@ def excluirProduto(request, id):
     return redirect('urlproduto')
 
 def entrar(request):
-    
     if request.method == "GET":
         return render(request, "entrar.html")
     elif request.method == "POST":
@@ -78,24 +77,23 @@ def entrar(request):
         senha = request.POST.get("txtPass")
         user = authenticate(username=usuario, password=senha)
 
-    if user:
-        login(request, user)
-        return redirect('urlproduto')
-    messages.error(request, "Falha na autenticação!")
-    return render(request,'entrar.html')
+        if user:
+            login(request, user)
+            return redirect('urlproduto')
+        messages.error(request, "Falha na autenticação!")    
+        return render(request, 'entrar.html')
 
 def sair(request):
     logout(request)
-    return redirect('urlEntrar')
+    return redirect('urlentrar')
 
 def cadastrarUsuario(request):
     if request.method == "GET":
         form = UsuarioForm()
-        context = {'form':form}
-        return render(request,"cadastrarUsuario.html", context)
-    else: 
+        context = {'form': form}
+        return render(request, 'cadastrarUsuario.html', context)
+    else:
         form = UsuarioForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
-        return redirect('urlEntrar')
-    
+            return redirect('urlentrar')
