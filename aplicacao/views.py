@@ -5,6 +5,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .form import UsuarioForm
+from .carrinho import Carrinho
 
 def index(request):
     produtos = Produto.objects.all()
@@ -29,13 +30,15 @@ def salvarProduto(request):
     thisqtde = request.POST.get('txtQtde')
     thisdata = request.POST.get('txtData')
     thisdescricao = request.POST.get('txtDescricao')
+    thisImagem = request.FILES.get('imagem')
 
     produto = Produto(
         nome = thisnome,
         preco = float(thispreco),
         qtde = thisqtde,
         data = thisdata,
-        descricao = thisdescricao
+        descricao = thisdescricao,
+        imagem = thisImagem
     )
 
     produto.save()
@@ -97,3 +100,16 @@ def cadastrarUsuario(request):
         if form.is_valid():
             form.save()
             return redirect('urlentrar')
+        
+def carrinho(request):
+    carrinho = Carrinho(request)
+    return HttpResponse(request, 'carrinho.html', carrinho)
+
+def addcarrinho(request):
+    return HttpResponse('add carrinho')
+
+def delcarrinho(request):
+    return HttpResponse('del carrinho')
+
+def finalizarCompra(request):
+    return HttpResponse('finalizar compra')

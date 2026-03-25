@@ -1,29 +1,30 @@
 from django.contrib import admin
 
-from .models import Produto, Cliente, Perfil, Venda, itemVenda
+from .models import Produto, Perfil, Venda, ItemVenda
 
 
-@admin .register(Produto)
+@admin.register(Produto)
 class ProdutoAdm(admin.ModelAdmin):
     list_display = ('nome', 'preco', 'qtde', 'descricao','data','imagem')
-    list_display_links = ('nome', ' ')
+    list_display_links = ('nome',)
     search_fields = ('nome', 'qtde')
+    list_filter = ('preco', 'qtde')
     list_editable = ('preco', 'qtde')
 
 
 
 @admin.register(Perfil)
-class perfilAdm(admin.modelAdmin):
-    list_display = ('id', 'telefone', 'rua', 'numero', 'cidade')
+class PerfilAdm(admin.ModelAdmin):
+    list_display = ('id', 'telefone', 'bairro', 'numero', 'cidade',)
 
 
 
 @admin.register(Venda)
-class perfilAdm(admin.modelAdmin):
-    list_display = ('id', 'telefone', 'rua', 'numero', 'cidade')
+class VendaAdm(admin.ModelAdmin):
+    list_display = ('id', 'data',)
 
 
-@admin.register(Perfil)
-class perfilAdm(admin.modelAdmin):
-    list_display = ('id', 'telefone', 'rua', 'numero', 'cidade')
+@admin.register(ItemVenda)
+class ItemVendaAdm(admin.ModelAdmin):
+    list_display = ('id', 'qtde',)
 
