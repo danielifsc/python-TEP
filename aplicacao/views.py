@@ -31,7 +31,7 @@ def vercarrinho(request):
     return render(request, 'vercarrinho.html', context)
 
 def atualizarcarrinho(request, item_id):
-    item = get_object_or_404(ItemVenda, id=item_id, venda_cliente=request.user)
+    item = get_object_or_404(ItemVenda, id=item_id, venda__cliente=request.user)
 
     if request.method == 'POST':
         acao = request.POST.get('acao')
@@ -47,9 +47,41 @@ def atualizarcarrinho(request, item_id):
                 item.delete()
         elif acao == 'remover':
             item.delete()
-    return redirect('vercarrinho')
+    return redirect('urlvercarrinho')
 
-    
+def adicionarcarrinho(request, produto_id):
+    produto = get_object_or_404(Produto, id=produto_id)
+    venda = get_or_create_carrinho(request)
+
+    #verifa se já existe o item no carrinho
+    item_venda, created = ItemVenda.objects.get_or_create(
+        venda = venda,
+        produto = produto,
+        defaults = {'qtde': 0}
+    )
+
+    #verificar estoque
+    nova_qtde = item_venda.qtde + 1
+    if nova_qtde > produto.qtde:
+        messages.error(request, f'Estoque insuficiente para {produto.nome}.')
+    else:
+        item_venda.qtde = nova_qtde
+        item_venda.save()
+        messages.success(request, f'{produto.nome} adicionando ao carrinho')
+    return redirect('urlvercarrinho')
+
+def finalizrcompra(request):
+    venda = get_or_create_carrinho(request)
+
+    if venda.itemvenda_set.exists():
+        venda.status = 'C' # venda concluida
+        venda.save()
+        messages.sucess(request, 'Compra finalizada com sucesso')
+    else:
+        messages.warning(request, 'Seu carrinho está vazio.')
+
+    return redirect('urlvercarrinho')
+
 def index(request):
     produtos = Produto.objects.all()
     return render(request, 'index.html', {'produtos': produtos})

@@ -14,7 +14,7 @@ class Perfil (models.Model):
 
  
     def __str__(self):
-     return f'Perfil de {self.cliente.username}'
+        return f'Perfil de {self.cliente.username}'
 
 
 
@@ -38,7 +38,7 @@ class Venda(models.Model):
     @property
     def total(self):
         total = 0
-        for item in self.itemvenda_set_all():
+        for item in self.itemvenda_set.all():
                 total += item.produto.preco * item.qtde
         return total
     
