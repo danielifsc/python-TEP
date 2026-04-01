@@ -23,6 +23,11 @@
             </div>
             <div class="card-footer">
               <small class="text-muted">R${{ p.preco }}</small>
+                {% if user.is_authenticated %}
+                  <div>
+                    <a href="{% url 'urladdcarrinho' p.id %}" class="btn btn-primary">Comprar</a>
+                  </div>
+                {% endif %}
             </div>
           </div>
         </div>
