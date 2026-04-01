@@ -5,6 +5,7 @@ from .views import cadastrarUsuario
 from .views import carrinho, addcarrinho, delcarrinho
 from django.conf.urls.static import static
 from django.conf import settings
+from . import views
 
 urlpatterns = [
     path('', index, name="urlindex"),
@@ -21,8 +22,11 @@ urlpatterns = [
     path('addcarrinho/<int:id>', addcarrinho, name="urlcarrinho"),
     path('delcarrinho/<int:id>', delcarrinho, name="urlcarrinho"),
     path('carrinho', carrinho, name="urlcarrinho"),
-    path('finalizarCompra', carrinho, name="urlfinalizarcompra")
+    path('finalizarCompra', carrinho, name="urlfinalizarcompra"),
     
+    ### CARRINHO
+
+    path('vercarrinho', views.vercarrinho, name="urlvercarrinho")
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
