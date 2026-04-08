@@ -7,6 +7,38 @@ from django.contrib import messages
 from .form import UsuarioForm
 from .carrinho import Carrinho
 
+@login_required
+def detalhe_pedido(request, venda_id):
+    venda = get_object_or_404(Venda, id = venda_id, cliente = request.user)
+
+    if venda.cliente != request.user:
+            return redirect("historico_pedidos")
+    
+    itens = venda.itemvenda_set.all()
+
+    try:
+        perfil = Perfil.object.get(cliente = request.user)
+    except Perfil.DoesNotExist:
+        perfil = None
+
+    context = {
+        'venda': venda,
+        'itens': itens,
+        'perfil': perfil,
+
+    }
+
+
+@login_required
+def historico_pedidos(request):
+    pedidos = Venda.objects.filter(
+        cliente = request.user,
+        status = 'C'
+    ).order_by('-data')
+
+    return render(request, 'historico_pedidos.html', {'pedidos': pedidos})    
+
+
 ### CARRINHO #####
 def get_or_create_carrinho(request):
     venda, created = Venda.objects.get_or_create(
@@ -70,13 +102,13 @@ def adicionarcarrinho(request, produto_id):
         messages.success(request, f'{produto.nome} adicionando ao carrinho')
     return redirect('urlvercarrinho')
 
-def finalizrcompra(request):
+def finalizarcompra(request):
     venda = get_or_create_carrinho(request)
 
     if venda.itemvenda_set.exists():
         venda.status = 'C' # venda concluida
         venda.save()
-        messages.sucess(request, 'Compra finalizada com sucesso')
+        messages.success(request, 'Compra finalizada com sucesso')
     else:
         messages.warning(request, 'Seu carrinho está vazio.')
 
@@ -185,6 +217,9 @@ def addcarrinho(request):
 
 def delcarrinho(request):
     return HttpResponse('del carrinho')
-
+'''
 def finalizarCompra(request):
+
     return HttpResponse('finalizar compra')
+
+    '''

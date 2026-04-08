@@ -29,7 +29,11 @@ urlpatterns = [
     path('vercarrinho', views.vercarrinho, name="urlvercarrinho"),
     path('vercarrinho/atualizar/<int:item_id>/', views.atualizarcarrinho, name="urlatualizarcarrinho"),
     path('vercarrinho/adicionar/<int:produto_id>/', views.adicionarcarrinho, name="urladicionarcarrinho"),
-    path('vercarrinho/finalizar/', views.finalizarCompra, name="urlfinalizarcompra"),
+    path('vercarrinho/finalizar/', views.finalizarcompra, name="urlfinalizarcompra"),
+
+
+    path('historico/', views.historico_pedidos, name="urlhistorico"),
+    path('pedido/<int:venda_id>', views.detalhe_pedido, name="urldetalhe_pedido"),
 
 ]
 
