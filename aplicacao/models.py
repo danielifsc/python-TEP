@@ -1,6 +1,8 @@
+
+from django.conf import settings
 from django.db import models
 from django.contrib.auth.models import User 
-
+from django.db.models import Avg
 
 class Perfil (models.Model):
     telefone = models.CharField(max_length=10, null=True, blank=True)
@@ -54,7 +56,14 @@ class Produto(models.Model):
     def __str__(self):
         return self.nome
 
+    @property
+    def media_avaliacoes(self):
+        media = self.media_avaliacoes.aggregate(Avg('nota'))['nota__avg']
+        return round(media, 1) if media else 0
 
+    @property
+    def total_avaliacoes(self):
+        return self.avaliacoes.count()
 
 class ItemVenda(models.Model):
     venda = models.ForeignKey(Venda, on_delete=models.CASCADE)
@@ -68,3 +77,26 @@ class ItemVenda(models.Model):
     @property
     def subtotal(self):
         return self.produto.preco*self.qtde
+    
+
+class Avaliacao(models.Model):
+    produto = models.ForeignKey(Produto, on_delete=models.CASCADE )
+    cliente = models.ForeignKey(User, on_delete=models.CASCADE)
+    nota = models.IntegerField(choices=[(i, i) for i in range (1,6)])
+    comentario = models.TextField(blank=True, null=True)
+    data = models.DateTimeField(auto_now_add = True) 
+    verificada = models.BooleanField(default=False)
+
+    class Meta:
+        unique_together = ['produto', 'cliente']
+        ordering = ['-data']
+    
+    def save(self, *args, **kwargs):
+        from .models import ItemVenda
+        comprou = ItemVenda.objects.filter(
+            venda__cliente = self.cliente,
+            venda__status__in = ['PAGO', 'ENTREGUE'],
+            produto = self.produto
+        ).exists()
+        self.verificada = comprou
+        super().save(*args, **kwargs)

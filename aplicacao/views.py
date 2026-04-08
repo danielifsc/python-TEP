@@ -16,8 +16,9 @@ def detalhe_pedido(request, venda_id):
     
     itens = venda.itemvenda_set.all()
 
+
     try:
-        perfil = Perfil.object.get(cliente = request.user)
+        perfil = Perfil.objects.get(cliente = request.user)
     except Perfil.DoesNotExist:
         perfil = None
 
@@ -27,6 +28,8 @@ def detalhe_pedido(request, venda_id):
         'perfil': perfil,
 
     }
+
+    return render(request, 'detalhe_pedido.html', context)
 
 
 @login_required

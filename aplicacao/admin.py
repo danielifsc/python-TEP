@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Produto, Perfil, Venda, ItemVenda
+from .models import Avaliacao, Produto, Perfil, Venda, ItemVenda
 
 
 @admin.register(Produto)
@@ -28,3 +28,8 @@ class VendaAdm(admin.ModelAdmin):
 class ItemVendaAdm(admin.ModelAdmin):
     list_display = ('id', 'qtde',)
 
+@admin.register(Avaliacao)
+class AvaliacaoAdm(admin.ModelAdmin):
+    list_display = ('id', 'nota', 'data', 'verificada')
+    list_editable = ('nota', 'verificada')
+    
